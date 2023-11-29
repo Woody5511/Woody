@@ -1,58 +1,44 @@
 ## 首購通路是否會影響新客回購率
 
-- 資料提取、彙整：
--- 解題思路
--- 第一步創立一張新的表Orders_Count，為了找出回訪客戶而創立的(在主表可以select)
--- 第二步創立一張新的表first_trade，為了找出客戶在這間店的第一筆交易資料，使用只記錄新客行為的customers表的數值建立並且left join orders 表，只有customers表上有ID的，才會顯示orders.channel，channel使用涵式min，找出最早的渠道          
---第三步創立一張新的表repurchase，為了找出有再次購買的customersID
---第四步，將上面創立的表串在一起
---第五步，使用Group By用購買年跟渠道聚合出答案
-
-
-~~~~sql
 WITH Orders_Count AS (
-  -- 計算不同年份每位用戶各別有幾張訂單
-SELECT customerid, transactionyear, COUNT( orderid) AS order_cnt
-FROM Orders
-GROUP BY customerid, transactionyear
+  -- 統計每個用戶每年的訂單數量
+  SELECT customerid, transactionyear, COUNT(orderid) AS order_cnt
+  FROM Orders
+  GROUP BY customerid, transactionyear
 ),
 
---第一次購買的渠道
 first_trade AS (
-SELECT Customers.customerid, Customers.FirstTransactionDate, MIN(Orders.channel) AS FirstChannel
-FROM Customers
-LEFT JOIN Orders
-ON Customers.customerid = Orders.customerid
-AND Customers.FirstTransactionDate = Orders.TransactionDate
-GROUP BY Customers.customerid, Customers.FirstTransactionDate
+  -- 查找每個客戶的首次購買渠道
+  SELECT Customers.customerid, Customers.FirstTransactionDate, MIN(Orders.channel) AS FirstChannel
+  FROM Customers
+  LEFT JOIN Orders ON Customers.customerid = Orders.customerid
+                    AND Customers.FirstTransactionDate = Orders.TransactionDate
+  GROUP BY Customers.customerid, Customers.FirstTransactionDate
 ),
---計算出訂單數大於1的
+
 repurchase AS (
-SELECT customerid
-FROM Orders
-GROUP BY customerid
-HAVING COUNT(orderid) > 1
+  -- 篩選出訂單數量大於1的客戶ID
+  SELECT customerid
+  FROM Orders
+  GROUP BY customerid
+  HAVING COUNT(orderid) > 1
 )
--- 將上面創立的表串在一起
+
+-- 綜合以上各表查詢，新客户的首購渠道與重複購買的情況
 SELECT 
-Customers.firsttransactionyear,
-Channels.channeltype,
-COUNT(DISTINCT Customers.customerid) AS NewCustomers,
-COUNT(DISTINCT Orders_Count.customerid) AS Repurchase_Customers
+  Customers.firsttransactionyear,
+  Channels.channeltype,
+  COUNT(DISTINCT Customers.customerid) AS NewCustomers, -- 新客戶數量
+  COUNT(DISTINCT Orders_Count.customerid) AS Repurchase_Customers -- 重複購買客戶數量
 FROM Customers
-LEFT JOIN first_trade 
-ON Customers.customerid = first_trade.customerid
-LEFT JOIN repurchase 
-ON Customers.customerid = repurchase.customerid
-LEFT JOIN Orders_Count
-ON Customers.customerid = Orders_Count.customerid
-AND Customers.firsttransactionyear = Orders_Count.transactionyear
-AND Orders_Count.order_cnt > 1
-LEFT JOIN Channels 
-ON first_trade.FirstChannel = Channels.channel
--- 使用Group By用購買年跟渠道聚合出答案
-GROUP BY Customers.FirstTransactionYear,Channels.ChannelType;
-~~~~
+LEFT JOIN first_trade ON Customers.customerid = first_trade.customerid
+LEFT JOIN repurchase ON Customers.customerid = repurchase.customerid
+LEFT JOIN Orders_Count ON Customers.customerid = Orders_Count.customerid
+                       AND Customers.firsttransactionyear = Orders_Count.transactionyear
+                       AND Orders_Count.order_cnt > 1
+LEFT JOIN Channels ON first_trade.FirstChannel = Channels.channel
+-- 按照購買年份和渠道類型分组，計算各组的新客户和重複購買客户數量
+GROUP BY Customers.FirstTransactionYear, Channels.ChannelType;
 
 
 ## 首購通路 + 首購產品分類哪種組合回購率最高
