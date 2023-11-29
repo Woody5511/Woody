@@ -1,4 +1,4 @@
-# 首購通路是否會影響新客回購率
+#首購通路是否會影響新客回購率
 
 WITH Orders_Count AS (
   -- 統計每個用戶每年的訂單數量
@@ -41,7 +41,7 @@ LEFT JOIN Channels ON first_trade.FirstChannel = Channels.channel
 GROUP BY Customers.FirstTransactionYear, Channels.ChannelType;
 
 
-# 首購通路 + 首購產品分類哪種組合回購率最高
+#首購通路 + 首購產品分類哪種組合回購率最高
 
 - 首購產品分類組合 ：基本邏輯跟上一段程式碼雷同，只取了不同的表單，因此沒有展示；下方直接展示(其一)，如何將首購通路與首購產品分類程式碼整併
 
