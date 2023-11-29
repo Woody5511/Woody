@@ -28,36 +28,9 @@
 - 确定首次购买渠道。
 - 分析复购行为和产品类型的影响。
 
-**如何使用**：
-- 在任何支持SQL的数据库管理工具中运行此脚本。
-- 确保相应的数据表已存在并且具有适当的数据。
-
-### 数据分析图表
-
-#### sales_analysis_chart.png
-这张图表显示了2021年各季度的销售趋势，突出了促销活动对销售量的影响。
-
-![Sales Analysis Chart](path/to/sales_analysis_chart.png)
-
-### 数据文件
-
 #### data_sample.csv
-这个CSV文件包含了用于分析的样本数据集。它有助于进行初步的数据探索和理解数据结构。
+以下文件為用於分析的樣本數據集，有助於初步理解數據架構。
+https://docs.google.com/spreadsheets/d/1T_TTpngbS3CbhIaDxbn8vylgCsnxgQBY57Dptvrvw0Y/edit#gid=806514037
 
-**主要内容**：
-- 客户ID
-- 交易日期
-- 交易金额
-- 购买渠道
 
-## 使用指南
 
-这里可以提供一个关于如何运行项目的详细步骤说明，如果有安装需求或依赖，也应该在这一部分说明。
-
-## 联系方式
-
-如果对项目有疑问或需要进一步的信息，请联系我：
-- Email: [your-email@example.com](mailto:your-email@example.com)
-- LinkedIn: [your-linkedin-profile](your-linkedin-url)
-
-请根据实际情况替换以上示例中的文件名、路径和联系方式。这样的结构清晰地展示了项目内容，并提供了足够的信息给其他人了解和使用你的项目。
