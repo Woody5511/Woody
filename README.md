@@ -19,8 +19,7 @@
 
 
 #### Portfolio_query.sql
-这个SQL脚本用于分析首购通路对新客回购率的影响。它包含了多个子查询和公用表表达式（CTEs），以便从多个维度进行数据分析。
-
+[Portfolio Query](Portfolio_query.sql) - 这个SQL文件包含了用于分析首购通路对新客回购率影响的查询。
 技术栈: SQL, 数据分析。
 
 **主要内容**：
