@@ -18,14 +18,11 @@
 <img width="542" alt="螢幕擷取畫面 2023-11-29 124115" src="https://github.com/Woody5511/Woody/assets/134402371/a08744bf-b2b6-4cdd-84b6-be017bb194c0">
 
 
-#### Portfolio_query.sql
-[Portfolio Query](Portfolio_query.sql) - 这个SQL文件包含了用于分析首购通路对新客回购率影响的查询。
-技术栈: SQL, 数据分析。
+## Portfolio_query.sql
+[Portfolio Query](Portfolio_query.sql) - 這個SQL文件包含了兩個語法:
+1.首購通路是否會影響新客回購率
+2.首購通路+首購產品哪種組合回購率最高
 
-**主要内容**：
-- 统计每个用户每年的订单数量。
-- 确定首次购买渠道。
-- 分析复购行为和产品类型的影响。
 
 #### data_sample.csv
 以下文件為用於分析的樣本數據集，有助於初步理解數據架構。
